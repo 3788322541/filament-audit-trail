@@ -1,6 +1,6 @@
 @php
 /** @var array $changes Merged field-level changes from the AuditLog::changes accessor. */
-$changes = $state ?? [];
+$changes = $changes ?? ($state ?? []);
 @endphp
 
 <div>
@@ -17,15 +17,15 @@ $changes = $state ?? [];
             </div>
             <div class="grid grid-cols-1 divide-y divide-gray-200 text-sm sm:grid-cols-2 sm:divide-x sm:divide-y-0 dark:divide-white/10">
                 <div class="p-3">
-                    <div class="mb-1 text-xs font-medium text-danger-600 dark:text-danger-400">
+                    <div class="mb-1 text-xs font-medium" style="color: #e11d48;">
                         {{ __('filament-audit-trail::audit.diff.old') }}
                     </div>
-                    <div class="break-words font-mono text-xs text-gray-700 dark:text-gray-200">
+                    <div class="break-words font-mono text-xs text-gray-700 dark:text-gray-200" style="text-decoration: line-through;">
                         {{ is_scalar($change['old']) || $change['old'] === null ? ($change['old'] ?? '—') : json_encode($change['old'], JSON_UNESCAPED_UNICODE) }}
                     </div>
                 </div>
                 <div class="p-3">
-                    <div class="mb-1 text-xs font-medium text-success-600 dark:text-success-400">
+                    <div class="mb-1 text-xs font-medium" style="color: #16a34a;">
                         {{ __('filament-audit-trail::audit.diff.new') }}
                     </div>
                     <div class="break-words font-mono text-xs text-gray-700 dark:text-gray-200">

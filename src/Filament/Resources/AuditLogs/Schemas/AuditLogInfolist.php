@@ -49,7 +49,8 @@ class AuditLogInfolist
                     ->schema([
                         Entry::make('changes')
                             ->hiddenLabel()
-                            ->view('filament-audit-trail::infolists.changes'),
+                            ->view('filament-audit-trail::infolists.changes')
+                            ->viewData(fn($record): array => ['changes' => $record->changes]),
                     ]),
             ]);
     }

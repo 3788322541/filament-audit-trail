@@ -4,14 +4,36 @@
 
 Built for **Filament v5** · **PHP 8.2+** · **Laravel 11.28+**.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![PHP](https://img.shields.io/badge/php-^8.2-777bb3)
-![Filament](https://img.shields.io/badge/filament-^5.0-ea6aa3)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/zhenjun/filament-audit-trail.svg?style=flat-square)](https://packagist.org/packages/zhenjun/filament-audit-trail)
+[![Total Downloads on Packagist](https://img.shields.io/packagist/dt/zhenjun/filament-audit-trail.svg?style=flat-square)](https://packagist.org/packages/zhenjun/filament-audit-trail)
+[![License MIT](https://img.shields.io/packagist/l/zhenjun/filament-audit-trail.svg?style=flat-square)](LICENSE.md)
+![PHP](https://img.shields.io/badge/php-^8.2-777bb3?style=flat-square)
+![Filament](https://img.shields.io/badge/filament-^5.0-ea6aa3?style=flat-square)
+[![GitHub Stars](https://img.shields.io/github/stars/3788322541/filament-audit-trail?style=flat-square)](https://github.com/3788322541/filament-audit-trail/stargazers)
+
+---
+
+## Screenshots
+
+A read-only **Audit Logs** resource appears in your panel, with a filterable history list, a field-level diff on each entry, and a drop-in relation manager for any record.
+
+**The full trail — filterable, with action badges and a per-entry change count:**
+
+![Audit Logs list](docs/screenshots/screenshot-list.png)
+
+**Field-level diff on a single entry (old struck-through in red, new in green):**
+
+![Audit log diff detail](docs/screenshots/screenshot-diff.png)
+
+**The bundled relation manager, dropped onto a record's own page:**
+
+![Relation manager](docs/screenshots/screenshot-relation-manager.png)
 
 ---
 
 ## Table of contents
 
+- [Screenshots](#screenshots)
 - [Why](#why)
 - [Features](#features)
 - [Requirements](#requirements)
