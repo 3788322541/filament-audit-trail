@@ -2,6 +2,16 @@
 
 All notable changes to `zhenjun/filament-audit-trail` will be documented in this file.
 
+## 1.1.0 - 2026-09-26
+
+Pre-embed Pro-tier extension points. Zero behaviour change for existing users.
+
+- New `AuditHasher`, `TeamResolver` and `FieldPolicy` contracts under `Zhenjun\AuditTrail\Contracts`.
+- Null / pass-through default implementations bound in the container; the Pro package rebinds them to real implementations without touching call sites.
+- `Auditor::record()` now consults the three contracts before writing, populating `audit_logs.team_id` and `audit_logs.hash` when the Pro tier enables them.
+- New `pro.*` config section (`hashing.enabled` / `hashing.secret`, `team.resolver`, `fields.whitelist`, `fields.mask`). Left at defaults in the free tier, so behaviour is unchanged.
+- Hash chain query only runs when `pro.hashing.enabled` is true — no cost on the free write path.
+
 ## 1.0.0 - 2026-09-26
 
 Initial release for Filament v5.

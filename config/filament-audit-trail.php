@@ -111,4 +111,42 @@ return [
 
     'purge_days' => 365,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Pro tier
+    |--------------------------------------------------------------------------
+    |
+    | Extension points consumed by zhenjun/filament-audit-trail-pro. The free
+    | package ships null / pass-through implementations for the AuditHasher,
+    | TeamResolver and FieldPolicy contracts, so leaving this section untouched
+    | has zero effect on behaviour. Enabling any key here without the Pro
+    | package installed is a no-op (the null bindings still return null).
+    |
+    */
+
+    'pro' => [
+
+        'hashing' => [
+            // Compute and store `audit_logs.hash` as an HMAC-SHA256 chain when true.
+            'enabled' => false,
+            // Shared secret used by the Pro AuditHasher. Rotate via env, never commit.
+            'secret' => env('AUDIT_TRAIL_HASH_SECRET'),
+        ],
+
+        'team' => [
+            // Class name of a custom TeamResolver. Null uses the Pro package default
+            // (Filament team context / current tenant).
+            'resolver' => null,
+        ],
+
+        'fields' => [
+            // Per-model whitelist. Empty = record everything the exclude list allows
+            // (free behaviour). Populated = Pro enforces it.
+            'whitelist' => [],
+            // Attribute names whose stored values should be masked in the diff.
+            'mask' => [],
+        ],
+
+    ],
+
 ];

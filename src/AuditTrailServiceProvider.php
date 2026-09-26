@@ -6,6 +6,12 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Zhenjun\AuditTrail\Commands\PurgeAuditLogs;
+use Zhenjun\AuditTrail\Contracts\AuditHasher;
+use Zhenjun\AuditTrail\Contracts\FieldPolicy;
+use Zhenjun\AuditTrail\Contracts\TeamResolver;
+use Zhenjun\AuditTrail\Support\Defaults\NullAuditHasher;
+use Zhenjun\AuditTrail\Support\Defaults\NullTeamResolver;
+use Zhenjun\AuditTrail\Support\Defaults\PassThroughFieldPolicy;
 
 class AuditTrailServiceProvider extends PackageServiceProvider
 {
@@ -30,7 +36,13 @@ class AuditTrailServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        //
+        // Pro-tier extension points. The free package ships null / pass-through
+        // implementations so behaviour is unchanged until zhenjun/filament-audit-trail-pro
+        // rebinds these to real implementations. Use `bind` (not `singleton`) so
+        // the Pro package can override cleanly via `$this->app->singleton(...)`.
+        $this->app->bind(AuditHasher::class, NullAuditHasher::class);
+        $this->app->bind(TeamResolver::class, NullTeamResolver::class);
+        $this->app->bind(FieldPolicy::class, PassThroughFieldPolicy::class);
     }
 
     public function packageBooted(): void
