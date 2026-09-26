@@ -1,0 +1,17 @@
+vendor/
+composer.lock
+node_modules/
+npm-debug.log
+yarn-error.log
+.DS_Store
+.idea
+.vscode
+*.swo
+*.swp
+*.env
+*.bak
+/phpunit.xml
+/.phpunit.result.cache
+/build
+auth.json
+*.cache

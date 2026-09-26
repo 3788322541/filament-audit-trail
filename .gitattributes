@@ -1,0 +1,11 @@
+# https://git-scm.com/docs/gitattributes#_effects
+* text=auto eol=lf
+
+# Path names used for export-ignore should be relative to the root directory.
+/.github        export-ignore
+/tests          export-ignore
+/.editorconfig  export-ignore
+/.gitattributes export-ignore
+/.gitignore     export-ignore
+/.styleci.yml   export-ignore
+/phpunit.xml    export-ignore

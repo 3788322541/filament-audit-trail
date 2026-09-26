@@ -1,0 +1,72 @@
+{
+    "name": "zhenjun/filament-audit-trail",
+    "description": "Zero-config audit trail for Filament panels: record who changed what, when, and see field-level diffs in a native UI.",
+    "keywords": [
+        "zhenjun",
+        "laravel",
+        "filamentphp",
+        "filament",
+        "filament-plugin",
+        "audit",
+        "audit-log",
+        "activity-log",
+        "auditable"
+    ],
+    "homepage": "https://github.com/3788322541/filament-audit-trail",
+    "support": {
+        "issues": "https://github.com/3788322541/filament-audit-trail/issues",
+        "source": "https://github.com/3788322541/filament-audit-trail"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhenjun",
+            "email": "320361146+3788322541@users.noreply.github.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^5.0",
+        "spatie/laravel-package-tools": "^1.15.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^9.0|^10.0",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zhenjun\\AuditTrail\\": "src/",
+            "Zhenjun\\AuditTrail\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zhenjun\\AuditTrail\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "lint": "pint",
+        "test": "pest",
+        "test:lint": "pint --test"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zhenjun\\AuditTrail\\AuditTrailServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
