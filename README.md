@@ -10,6 +10,7 @@ Built for **Filament v5** · **PHP 8.2+** · **Laravel 11.28+**.
 ![PHP](https://img.shields.io/badge/php-^8.2-777bb3?style=flat-square)
 ![Filament](https://img.shields.io/badge/filament-^5.0-ea6aa3?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/3788322541/filament-audit-trail?style=flat-square)](https://github.com/3788322541/filament-audit-trail/stargazers)
+[![run-tests](https://github.com/3788322541/filament-audit-trail/actions/workflows/tests.yml/badge.svg)](https://github.com/3788322541/filament-audit-trail/actions/workflows/tests.yml)
 
 ---
 
@@ -264,6 +265,19 @@ The free tier covers recording, review UI and retention. **Audit Trail Pro** add
 - 📤 CSV / Excel export and saved filtered views.
 - 🧾 Relationship (pivot) auditing — `attached` / `detached`.
 - 🎛️ Per-field visibility control and column whitelisting.
+
+## Testing
+
+Run the test suite (Pest + Orchestra Testbench) and the code style check (Laravel Pint):
+
+```bash
+composer test        # vendor/bin/pest
+composer test:lint   # vendor/bin/pint --test
+```
+
+## Contributing
+
+Contributions are welcome. Please open an issue first for larger changes, and run `composer test` and `vendor/bin/pint` before submitting a pull request.
 
 ## License
 

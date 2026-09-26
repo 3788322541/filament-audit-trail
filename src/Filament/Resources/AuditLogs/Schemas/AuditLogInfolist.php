@@ -19,14 +19,14 @@ class AuditLogInfolist
                         TextEntry::make('event')
                             ->label(__('filament-audit-trail::audit.fields.event'))
                             ->badge()
-                            ->color(fn(string $state): string => match ($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'created' => 'success',
                                 'updated' => 'warning',
                                 'deleted' => 'danger',
                                 'restored' => 'info',
                                 default => 'gray',
                             })
-                            ->formatStateUsing(fn(string $state): string => __("filament-audit-trail::audit.events.{$state}")),
+                            ->formatStateUsing(fn (string $state): string => __("filament-audit-trail::audit.events.{$state}")),
                         TextEntry::make('created_at')
                             ->label(__('filament-audit-trail::audit.fields.created_at'))
                             ->dateTime(),
@@ -42,7 +42,7 @@ class AuditLogInfolist
                         TextEntry::make('url')
                             ->label(__('filament-audit-trail::audit.fields.url'))
                             ->default('—')
-                            ->url(fn(?string $state): ?string => $state)
+                            ->url(fn (?string $state): ?string => $state)
                             ->openUrlInNewTab(),
                     ]),
                 Section::make(__('filament-audit-trail::audit.fields.changes'))
@@ -50,7 +50,7 @@ class AuditLogInfolist
                         Entry::make('changes')
                             ->hiddenLabel()
                             ->view('filament-audit-trail::infolists.changes')
-                            ->viewData(fn($record): array => ['changes' => $record->changes]),
+                            ->viewData(fn ($record): array => ['changes' => $record->changes]),
                     ]),
             ]);
     }

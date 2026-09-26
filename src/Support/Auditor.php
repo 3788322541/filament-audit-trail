@@ -15,7 +15,7 @@ class Auditor
             return;
         }
 
-        if (app()->runningInConsole() && ! config('filament-audit-trail.record_console', true)) {
+        if (app()->runningInConsole() && !config('filament-audit-trail.record_console', true)) {
             return;
         }
 
@@ -28,7 +28,7 @@ class Auditor
 
         $tags = AuditContext::tags();
 
-        if (app()->runningInConsole() && ! in_array('console', $tags, true)) {
+        if (app()->runningInConsole() && !in_array('console', $tags, true)) {
             $tags[] = 'console';
         }
 

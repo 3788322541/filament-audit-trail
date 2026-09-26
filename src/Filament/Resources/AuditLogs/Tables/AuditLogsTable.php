@@ -16,25 +16,25 @@ class AuditLogsTable
                 TextColumn::make('event')
                     ->label(__('filament-audit-trail::audit.fields.event'))
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'created' => 'success',
                         'updated' => 'warning',
                         'deleted' => 'danger',
                         'restored' => 'info',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn(string $state): string => __("filament-audit-trail::audit.events.{$state}")),
+                    ->formatStateUsing(fn (string $state): string => __("filament-audit-trail::audit.events.{$state}")),
                 TextColumn::make('auditable_name')
                     ->label(__('filament-audit-trail::audit.fields.auditable'))
                     ->searchable()
-                    ->description(fn(mixed $record): string => (new \ReflectionClass($record->auditable_type))->getShortName())
+                    ->description(fn (mixed $record): string => (new \ReflectionClass($record->auditable_type))->getShortName())
                     ->wrap(),
                 TextColumn::make('actor.name')
                     ->label(__('filament-audit-trail::audit.fields.actor'))
                     ->default('—'),
                 TextColumn::make('changes_count')
                     ->label(__('filament-audit-trail::audit.fields.changes'))
-                    ->state(fn(mixed $record): int => count($record->changes))
+                    ->state(fn (mixed $record): int => count($record->changes))
                     ->suffix(' field(s)'),
                 TextColumn::make('created_at')
                     ->label(__('filament-audit-trail::audit.fields.created_at'))

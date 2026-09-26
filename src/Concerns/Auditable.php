@@ -3,7 +3,9 @@
 namespace Zhenjun\AuditTrail\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Zhenjun\AuditTrail\Models\AuditLog;
 use Zhenjun\AuditTrail\Support\Auditor;
 use Zhenjun\AuditTrail\Support\DiffRecorder;
 
@@ -16,15 +18,15 @@ trait Auditable
 
     public static function bootAuditable(): void
     {
-        static::created(fn(Model $model) => $model->writeAudit('created'));
-        static::updating(fn(Model $model) => $model->prepareUpdateAudit());
-        static::updated(fn(Model $model) => $model->writeAudit('updated'));
-        static::deleting(fn(Model $model) => $model->prepareDeleteAudit());
-        static::deleted(fn(Model $model) => $model->writeAudit('deleted'));
+        static::created(fn (Model $model) => $model->writeAudit('created'));
+        static::updating(fn (Model $model) => $model->prepareUpdateAudit());
+        static::updated(fn (Model $model) => $model->writeAudit('updated'));
+        static::deleting(fn (Model $model) => $model->prepareDeleteAudit());
+        static::deleted(fn (Model $model) => $model->writeAudit('deleted'));
 
         // The "restored" event only exists on models that use SoftDeletes.
         if (in_array(SoftDeletes::class, class_uses_recursive(static::class), true)) {
-            static::restored(fn(Model $model) => $model->writeAudit('restored'));
+            static::restored(fn (Model $model) => $model->writeAudit('restored'));
         }
     }
 
@@ -80,8 +82,8 @@ trait Auditable
         return array_values(array_unique(array_merge($defaults, $excluded, $custom)));
     }
 
-    public function auditLogs(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function auditLogs(): MorphMany
     {
-        return $this->morphMany(\Zhenjun\AuditTrail\Models\AuditLog::class, 'auditable');
+        return $this->morphMany(AuditLog::class, 'auditable');
     }
 }

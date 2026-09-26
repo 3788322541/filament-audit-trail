@@ -27,14 +27,14 @@ class AuditLogRelationManager extends RelationManager
                 TextColumn::make('event')
                     ->label(__('filament-audit-trail::audit.fields.event'))
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'created' => 'success',
                         'updated' => 'warning',
                         'deleted' => 'danger',
                         'restored' => 'info',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn(string $state): string => __("filament-audit-trail::audit.events.{$state}")),
+                    ->formatStateUsing(fn (string $state): string => __("filament-audit-trail::audit.events.{$state}")),
                 TextColumn::make('actor.name')
                     ->label(__('filament-audit-trail::audit.fields.actor'))
                     ->default('—'),
