@@ -7,12 +7,20 @@
         "filamentphp",
         "filament",
         "filament-plugin",
+        "admin-panel",
         "audit",
         "audit-log",
+        "audit-trail",
         "activity-log",
+        "activity",
+        "logging",
+        "changes",
+        "diff",
+        "compliance",
         "auditable"
     ],
     "homepage": "https://github.com/3788322541/filament-audit-trail",
+    "type": "library",
     "support": {
         "issues": "https://github.com/3788322541/filament-audit-trail/issues",
         "source": "https://github.com/3788322541/filament-audit-trail"

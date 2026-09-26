@@ -277,7 +277,11 @@ composer test:lint   # vendor/bin/pint --test
 
 ## Contributing
 
-Contributions are welcome. Please open an issue first for larger changes, and run `composer test` and `vendor/bin/pint` before submitting a pull request.
+Please see [CONTRIBUTING](CONTRIBUTING.md) for setup, testing and pull-request guidelines, and [CHANGELOG](CHANGELOG.md) for what has changed in each release. Contributions are welcome — for larger changes, please open an issue first, and run `composer test` and `composer test:lint` before submitting a pull request.
+
+## Sponsor
+
+If Audit Trail saves you time, consider [sponsoring development](https://github.com/sponsors/3788322541) — it keeps the plugin maintained and helps fund the Pro features below.
 
 ## License
 
