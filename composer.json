@@ -67,6 +67,9 @@
             "providers": [
                 "Zhenjun\\AuditTrail\\AuditTrailServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "1.1.x-dev"
         }
     },
     "config": {
