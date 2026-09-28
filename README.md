@@ -184,6 +184,8 @@ All options live in `config/filament-audit-trail.php`:
 | `record_user_agent` | `true` | Store the user agent. |
 | `record_console` | `true` | Record changes made in console (tagged `console`). Set `false` to skip. |
 | `purge_days` | `365` | Default retention (days) used by `audit:purge`. |
+| `team_model` | `null` | Team model used by the `AuditLog::team()` relation outside a panel context — auto-detected from the current panel when omitted. |
+| `list_header_widgets` | `[]` | Widgets rendered above the audit logs table. The Pro plugin appends its widgets here at boot. |
 
 ## Customizing what gets recorded
 
@@ -258,13 +260,13 @@ Schedule::command('audit:purge')->weekly();
 
 ## Pro version
 
-The free tier covers recording, review UI and retention. **Audit Trail Pro** adds:
+The free tier covers recording, review UI and retention. **Audit Trail Pro** (commercial) layers on the compliance and multi-team capabilities paid teams need:
 
-- 🏢 Multi-team / multi-tenant scoping (`team_id`).
-- 🔗 Tamper-evident, hash-chained entries for compliance.
-- 📤 CSV / Excel export and saved filtered views.
-- 🧾 Relationship (pivot) auditing — `attached` / `detached`.
-- 🎛️ Per-field visibility control and column whitelisting.
+- 🔗 **Tamper-evident hash chain** — every entry is HMAC-chained to the previous one, per team, with an `audit:verify` command and a live chain-status widget.
+- 🏢 **Multi-team / multi-tenant scoping** — logs are tagged with the active tenant on write, and the resource, widgets and exports only ever show that tenant's own history.
+- 📤 **CSV / Excel export** — filter by date range and event type, then stream a CSV or XLSX download.
+- 🎛️ **Field whitelisting & masking** — record only the fields you care about and store sensitive values as `***`.
+- 📊 **Stats overview** — total entries, changes today, distinct actors and chain health at the top of the logs page.
 
 ## Testing
 
@@ -281,7 +283,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for setup, testing and pull-request g
 
 ## Sponsor
 
-If Audit Trail saves you time, consider [sponsoring development](https://github.com/sponsors/3788322541) — it keeps the plugin maintained and helps fund the Pro features below.
+If Audit Trail saves you time, consider [sponsoring development](https://github.com/sponsors/3788322541) — it keeps the plugin maintained and helps fund ongoing development of the Pro features.
 
 ## License
 

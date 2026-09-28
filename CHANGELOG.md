@@ -2,6 +2,16 @@
 
 All notable changes to `zhenjun/filament-audit-trail` will be documented in this file.
 
+## 1.2.0 - 2026-09-28
+
+Multi-tenant & Pro UI groundwork.
+
+- `AuditLog::team()` relationship, resolved via the new `filament-audit-trail.team_model` config key or the current panel's tenant model.
+- `AuditLogResource` now declares `team` as its tenant ownership relationship, so the resource list is scoped to the current Filament tenant.
+- `ListAuditLogs` renders header widgets from the new `filament-audit-trail.list_header_widgets` config key (populated by the Pro plugin).
+- Hash chain is now tracked per team: the previous hash is looked up among the same team's entries, ignoring global scopes. Writes are serialized with an atomic cache lock when the store supports locks.
+- Fixed a subtle chain bug where a `null` hash on the latest row could be used as the previous hash.
+
 ## 1.1.0 - 2026-09-26
 
 Pre-embed Pro-tier extension points. Zero behaviour change for existing users.

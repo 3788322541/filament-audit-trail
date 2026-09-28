@@ -2,7 +2,10 @@
 
 namespace Zhenjun\AuditTrail\Support;
 
+use Illuminate\Contracts\Cache\LockProvider;
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Zhenjun\AuditTrail\Contracts\AuditHasher;
 use Zhenjun\AuditTrail\Contracts\FieldPolicy;
@@ -46,6 +49,9 @@ class Auditor
             $tags[] = 'console';
         }
 
+        // Pro-tier hook: multi-team / multi-tenant scoping. Null in the free tier.
+        $teamId = app(TeamResolver::class)->resolve($model, $actor);
+
         $attributes = [
             'auditable_type' => $model->getMorphClass(),
             'auditable_id' => (string) $model->getKey(),
@@ -59,20 +65,54 @@ class Auditor
             'user_agent' => config('filament-audit-trail.record_user_agent', true) ? substr((string) Request::userAgent(), 0, 1023) : null,
             'url' => config('filament-audit-trail.record_url', true) ? (Request::fullUrl() ?: null) : null,
             'tags' => $tags ?: null,
-            // Pro-tier hook: multi-team / multi-tenant scoping. Null in the free tier.
-            'team_id' => app(TeamResolver::class)->resolve($model, $actor),
+            'team_id' => $teamId,
         ];
 
         // Pro-tier hook: tamper-evident hash chain. Skipped entirely when disabled
         // (the free default) so no extra query runs on the write path.
-        if (config('filament-audit-trail.pro.hashing.enabled', false)) {
-            $previousHash = AuditLog::query()->latest('id')->value('hash');
-            $attributes['hash'] = app(AuditHasher::class)->hash($attributes, $previousHash);
-        }
-
-        $log = AuditLog::create($attributes);
+        $log = config('filament-audit-trail.pro.hashing.enabled', false)
+            ? static::createWithHash($attributes, $teamId)
+            : AuditLog::create($attributes);
 
         event(new AuditLogged($log));
+    }
+
+    /**
+     * Write a hash-chained entry. The chain is tracked per team: the previous
+     * hash is looked up among the same team's hashed entries (null team
+     * included), ignoring global scopes so tenancy filters cannot hide the
+     * real tail of the chain.
+     *
+     * When the cache store supports atomic locks, the lookup + insert pair is
+     * serialized so concurrent requests cannot fork the chain. A lock timeout
+     * degrades to an unserialized write rather than failing the caller's
+     * business operation.
+     */
+    protected static function createWithHash(array $attributes, int|string|null $teamId): AuditLog
+    {
+        $write = static function () use ($attributes, $teamId): AuditLog {
+            $query = AuditLog::withoutGlobalScopes()->whereNotNull('hash');
+
+            $query = $teamId === null
+                ? $query->whereNull('team_id')
+                : $query->where('team_id', $teamId);
+
+            $attributes['hash'] = app(AuditHasher::class)->hash($attributes, $query->latest('id')->value('hash'));
+
+            return AuditLog::create($attributes);
+        };
+
+        if (Cache::getStore() instanceof LockProvider) {
+            try {
+                return Cache::lock('filament-audit-trail:hash-chain:' . ($teamId ?? 'global'), 10)->block(5, $write);
+            } catch (LockTimeoutException) {
+                // Degrade to an unserialized write rather than failing the
+                // caller's business operation. The worst case is a forked
+                // chain, which the verifier will surface.
+            }
+        }
+
+        return $write();
     }
 
     protected static function recordName(Model $model, array $exclude): ?string

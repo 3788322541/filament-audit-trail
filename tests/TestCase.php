@@ -74,5 +74,11 @@ class TestCase extends Orchestra
             $table->string('name')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('teams', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->timestamps();
+        });
     }
 }

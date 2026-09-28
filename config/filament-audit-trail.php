@@ -113,6 +113,33 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Team model
+    |--------------------------------------------------------------------------
+    |
+    | The class name of your team / tenant model. Only needed when the audit
+    | log UI accesses the `team()` relationship without an active Filament
+    | panel tenant context (e.g. CLI commands, queue workers). When a panel
+    | with tenancy enabled is the current panel, its tenant model is used
+    | automatically.
+    |
+    */
+
+    'team_model' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | List page header widgets
+    |--------------------------------------------------------------------------
+    |
+    | Widgets rendered above the audit logs table. The Pro plugin appends
+    | its chain status, stats and export widgets here at boot time.
+    |
+    */
+
+    'list_header_widgets' => [],
+
+    /*
+    |--------------------------------------------------------------------------
     | Pro tier
     |--------------------------------------------------------------------------
     |

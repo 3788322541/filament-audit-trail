@@ -45,6 +45,9 @@
         "pestphp/pest-plugin-arch": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0"
     },
+    "suggest": {
+        "zhenjun/filament-audit-trail-pro": "Tamper-evident hash chain, multi-team scoping, field whitelisting/masking and CSV/Excel export."
+    },
     "autoload": {
         "psr-4": {
             "Zhenjun\\AuditTrail\\": "src/",
@@ -69,7 +72,7 @@
             ]
         },
         "branch-alias": {
-            "dev-main": "1.1.x-dev"
+            "dev-main": "1.2.x-dev"
         }
     },
     "config": {

@@ -21,6 +21,12 @@ class AuditLogResource extends Resource
 
     protected static ?int $navigationSort = 90;
 
+    /**
+     * Scope the resource to the current Filament tenant via the model's
+     * `team()` relationship. No-op when the panel has tenancy disabled.
+     */
+    protected static ?string $tenantOwnershipRelationshipName = 'team';
+
     public static function getNavigationLabel(): string
     {
         return __('filament-audit-trail::audit.navigation.label');

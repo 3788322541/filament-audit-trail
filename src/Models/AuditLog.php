@@ -2,9 +2,12 @@
 
 namespace Zhenjun\AuditTrail\Models;
 
+use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use LogicException;
 
 class AuditLog extends Model
 {
@@ -48,6 +51,41 @@ class AuditLog extends Model
     public function actor(): MorphTo
     {
         return $this->morphTo('actor');
+    }
+
+    /**
+     * The team / tenant this entry belongs to.
+     *
+     * Resolvable once a team model is known: either via the
+     * `filament-audit-trail.team_model` config key or via the current
+     * Filament panel's tenant model.
+     */
+    public function team(): BelongsTo
+    {
+        $model = static::teamModel();
+
+        if ($model === null) {
+            throw new LogicException(
+                'Unable to resolve the audit log team model. Set the [filament-audit-trail.team_model] config key to your team model class, or enable tenancy on a Filament panel that registers the audit log resource.'
+            );
+        }
+
+        return $this->belongsTo($model, 'team_id');
+    }
+
+    public static function teamModel(): ?string
+    {
+        $model = config('filament-audit-trail.team_model');
+
+        if (is_string($model) && $model !== '') {
+            return $model;
+        }
+
+        if (app()->bound('filament')) {
+            return Filament::getCurrentPanel()?->getTenantModel();
+        }
+
+        return null;
     }
 
     /**
